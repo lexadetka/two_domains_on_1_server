@@ -22,9 +22,9 @@ RUN curl -sS https://getcomposer.org/installer | php -- \
     --filename=composer \
     --install-dir=/usr/local/bin
 
-CMD bash -c "composer install"
+#CMD bash -c "composer install"
 
 EXPOSE 8080
 
-WORKDIR /var/www/
+WORKDIR /var/www
 

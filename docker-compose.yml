@@ -6,9 +6,9 @@ services:
     volumes:
       - ./:/var/www
       - ./_docker/nginx/conf.d:/etc/nginx/conf.d
-    depends_on:
-      - app
-    container_name: backend_nginx
+#    depends_on:
+#      - app
+    container_name: nginx
     expose:
       - 80
     network_mode: host
@@ -18,7 +18,7 @@ services:
       context: .
       dockerfile: _docker/app/Dockerfile
     volumes:
-      - ./backend:/var/www/backend
+      - ./backend:/var/www
     container_name: backend_app
     depends_on:
       - db
