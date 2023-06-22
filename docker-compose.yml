@@ -1,0 +1,42 @@
+version: '3'
+
+services:
+  nginx:
+    image: nginx:latest
+    volumes:
+      - ./:/var/www
+      - ./_docker/nginx/conf.d:/etc/nginx/conf.d
+    depends_on:
+      - app
+    container_name: backend_nginx
+    expose:
+      - 80
+    network_mode: host
+
+  app:
+    build:
+      context: .
+      dockerfile: _docker/app/Dockerfile
+    volumes:
+      - ./backend:/var/www/backend
+    container_name: backend_app
+    depends_on:
+      - db
+    network_mode: host
+    expose:
+      - 9000
+
+  db:
+    image: mysql:8.0
+    restart: always
+    volumes:
+      - ./backend/tmp/db:/var/lib/mysql
+    environment:
+      MYSQL_DATABASE: sanctum
+      MYSQL_ROOT_PASSWORD: vyazuti12345
+    command: mysqld --character-set-server=utf8 --collation-server=utf8_unicode_ci
+    container_name: db
+    expose:
+      - 3306
+    network_mode: host
+
